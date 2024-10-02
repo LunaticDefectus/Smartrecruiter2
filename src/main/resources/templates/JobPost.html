@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Post Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/Jobpost.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            max-width: 600px;
+            margin: 50px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        select {
+            appearance: none;
+            background-color: white;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 5"><path fill="none" stroke="black" stroke-width=".5" d="M2 0 L0 2 L4 2 Z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px 10px;
+            padding-right: 30px;
+        }
+
+        /* Toolbar styling */
+        .toolbar {
+            display: flex;
+            justify-content: flex-start;
+            background-color: rgb(228, 226, 224);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .toolbar button {
+            border: none;
+            background: none;
+            color: black;
+            font-size: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* Contenteditable div styling */
+        .editable {
+            font-size: 18px;
+            height: 340px;
+            width: 100%;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <form th:action="@{/jobpost}" th:object="${jobPost}" method="post">
+        <h2>Post a New Job</h2>
+
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{title}" placeholder="Job Title" required>
+
+        <label for="company">Company Name:</label>
+        <input type="text" id="company" th:field="*{companyName}" placeholder="Company Name" required>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" th:field="*{location}" placeholder="Location" required>
+
+        <label for="jobType">Job Type:</label>
+        <select id="jobType" name="jobType" th:field="*{jobType}" required>
+            <option value="PART-TIME">Part-time</option>
+            <option value="FULLTIME">Fulltime</option>
+        </select>
+
+        <label for="jobDate">Job Date:</label>
+        <input type="date" id="jobDate" th:field="*{jobDate}" required>
+
+        <label for="jobDescription">Job Description:</label>
+        <div class="toolbar">
+            <button type="button" onclick="document.execCommand('bold', false, '');"><i class="bi bi-type-bold"></i></button>
+            <button type="button" onclick="document.execCommand('italic', false, '');"><i class="bi bi-type-italic"></i></button>
+            <button type="button" onclick="document.execCommand('insertUnorderedList', false, '');"><i class="bi bi-list-ul"></i></button>
+        </div>
+        <div class="editable" id="jobDescription" contenteditable="true"></div>
+
+        <!-- Hidden field to submit job description -->
+        <input type="hidden" id="descriptionField" th:field="*{jobDescription}">
+
+        <button type="submit">Post Job</button>
+    </form>
+
+    <script>
+        // Sanitize HTML while keeping only the allowed tags
+        function sanitizeHTML(html) {
+            let tempDiv = document.createElement("div");
+            tempDiv.innerHTML = html;
+
+            let elements = tempDiv.querySelectorAll("*");
+            elements.forEach(el => {
+                el.removeAttribute("style"); // Remove inline styles
+                el.removeAttribute("class"); // Remove any unwanted classes
+
+                // Remove unwanted tags and only keep allowed tags
+                if (!["B", "I","BR"].includes(el.tagName)) {
+                    let textNode = document.createTextNode(el.textContent || "");
+                    el.parentNode.replaceChild(textNode, el);
+                }
+            });
+
+            return tempDiv.innerHTML;
+        }
+
+        // Handle paste event to sanitize pasted content
+        function handlePaste(event) {
+            event.preventDefault();
+            let clipboardData = event.clipboardData || window.clipboardData;
+            let pastedData = clipboardData.getData("text/html") || clipboardData.getData("text");
+
+            // Remove unwanted HTML tags or styles
+            let sanitizedData = sanitizeHTML(pastedData);
+
+            // Insert sanitized content at the caret position
+            document.execCommand("insertHTML", false, sanitizedData);
+        }
+
+        document.querySelector("form").addEventListener("submit", function (event) {
+            let rawDescription = document.getElementById("jobDescription").innerHTML;
+            document.getElementById("descriptionField").value = sanitizeHTML(rawDescription);
+        });
+    </script>
+</div>
+</body>
+</html>

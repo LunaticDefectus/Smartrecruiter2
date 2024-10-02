@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 850px;
+    margin: 5px auto;
+    background-color: #fff;
+    padding: 60px;
+    border-radius: 18px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: "poppins",sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 35px;
+}
+
+label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #3e3e3e;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 18px;
+    font-size: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+.name-fields {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.name-fields input {
+    width: 100%;
+}
+
+.btn {
+    padding: 14px 40px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    float: right;
+    margin-top: 5px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* To ensure form button is within the form layout */
+.form-group {
+    overflow: hidden;
+}
+
+.form-group:last-of-type {
+    margin-top: 35px;
+    display: flex;
+    justify-content: flex-start;
+}

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/Login.css">
+</head>
+<body>
+<div class="container">
+    <h2>Login</h2>
+    <form action="/login" method="POST">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="username" placeholder="Enter Email" required> <!-- 'username' is required by Spring -->
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+        </div>
+
+        <div class="form-group">
+            <a href="/register" class="registration-link">Aren’t you registered yet?</a>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn">Login</button>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

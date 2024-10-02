@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 500px;
+    margin: 120px auto;
+    background-color: #fff;
+    padding: 50px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: "poppins",sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 30px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: #3e3e3e;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 5px;
+}
+
+/* Styling for the registration link */
+.registration-link {
+    display: block;
+    font-size: 16px;
+    text-align: left;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.registration-link:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    float: left;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+/* Ensures the button stays aligned within the form */
+.form-group {
+    overflow: hidden;
+}
+
+.form-group:last-of-type {
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-start;
+}

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Candidate Applications</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="app-icon">
+                <!-- Your SVG or icon -->
+            </div>
+        </div>
+        <ul class="sidebar-list">
+            <li class="sidebar-list-item">
+                <a href="/recruiter/job">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                    </svg>
+                    <span>Create New</span>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="/recruiter/dashboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-briefcase-fill" viewBox="0 0 16 16">
+                        <path d="M0 4.5A1.5 1.5 0 0 1 1.5 3h13A1.5 1.5 0 0 1 16 4.5V6h-2v-.5a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0-.5.5V6H0V4.5zm0 1V12a1.5 1.5 0 0 0 1.5 1.5h13A1.5 1.5 0 0 0 16 12V5.5H0z"/>
+                    </svg>
+                    <span>Jobs</span>
+                </a>
+            </li>
+            <li class="sidebar-list-item">
+                <a href="/recruiter/dashboardc">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <path d="M3 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H3zm5-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                    </svg>
+                    <span>Candidates</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="account-info">
+            <div class="account-info-name">
+                <!-- Dynamically display the email of the logged-in user -->
+                <span th:text="${#authentication.name}"></span> <!-- Displays the email -->
+            </div>
+
+            <!-- Button that triggers the logout box -->
+            <button class="account-info-more" onclick="toggleLogoutBox()">
+                <div class="svg-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal">
+                        <circle cx="12" cy="12" r="1"/>
+                        <circle cx="19" cy="12" r="1"/>
+                        <circle cx="5" cy="12" r="1"/>
+                    </svg>
+                </div>
+            </button>
+
+
+            <!-- Logout dropdown box (initially hidden) -->
+            <div id="logout-box" class="logout-box" style="display: none;">
+                <a href="/logout">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                    </svg>
+                    Logout
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="app-content">
+        <div class="app-content-header">
+            <h1 class="app-content-headerText">Candidates</h1>
+            <button class="mode-switch" title="Switch Theme">
+                <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+                    <defs></defs>
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="app-content-actions">
+            <input class="search-bar" placeholder="Search..." type="text">
+            <div id="job-listings">
+                <!-- The jobs will be dynamically inserted here -->
+            </div>
+            <div class="app-content-actions-wrapper">
+                <div class="filter-button-wrapper">
+                    <button class="action-button filter jsFilter"><span>Filter</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter">
+                            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="products-area-wrapper tableView">
+            <div class="products-header">
+                <div class="product-cell">Job Title</div>
+                <div class="product-cell">Applicant</div>
+                <div class="product-cell">CV</div>
+                <div class="product-cell">Pertinence</div>
+                <div class="product-cell">Status</div>
+                <div class="product-cell">Update Status</div>
+            </div>
+
+            <div th:each="jobApplication  : ${applications}" class="products-row">
+                <div class="product-cell job-title">
+                    <span th:text="${jobApplication.jobPost.title}">Job Title</span>
+                </div>
+                <div class="product-cell applicant">
+                    <span th:text="${jobApplication.applicant.email}">Applicant</span>
+                </div>
+                <div class="product-cell cv">
+                    <a th:href="@{/download/{id}(id=${jobApplication.id})}">Download CV</a>
+                </div>
+                <div class="product-cell pertinence">
+                    <span th:text="${jobApplication.pertinenceScore}">%</span> <!-- Displaying pertinence score -->
+                </div>
+                <div class="product-cell status">
+                    <span th:text="${jobApplication.status}">Status</span>
+                </div>
+                <div class="product-cell update-status">
+                    <form th:action="@{/recruiter/dashboardc/update}" method="post">
+                        <!-- Hidden field to pass the application ID -->
+                        <input type="hidden" name="id" th:value="${jobApplication.id}" />
+
+                        <select name="status">
+                            <option value="PENDING" th:selected="${jobApplication.status == 'PENDING'}">Pending</option>
+                            <option value="UNDER_REVIEW" th:selected="${jobApplication.status == 'UNDER_REVIEW'}">Under Review</option>
+                            <option value="ACCEPTED" th:selected="${jobApplication.status == 'ACCEPTED'}">Accepted</option>
+                            <option value="REJECTED" th:selected="${jobApplication.status == 'REJECTED'}">Rejected</option>
+                        </select>
+
+                        <button type="submit">Update</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="/js/script.js"></script>
+
+</body>
+</html>
